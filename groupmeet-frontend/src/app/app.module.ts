@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { HeaderComponent } from './header/header.component';
 import { GroupsManagementComponent } from './groups-management/groups-management.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginSignupComponent,
     HeaderComponent,
-    GroupsManagementComponent
+    GroupsManagementComponent,
+    CalendarComponent
 
   ],
   imports: [

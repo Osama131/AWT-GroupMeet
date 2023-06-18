@@ -20,7 +20,7 @@ export class GroupsManagementComponent {
   newMemberEmail: string = '';
   newMemberGroupName: string = '';
   activeGroup: string = '';
-  
+
   createGroup() {
     if (this.newGroupName.trim()) {
       const newGroup: Group = { name: this.newGroupName, members: [] };
@@ -36,7 +36,7 @@ export class GroupsManagementComponent {
           this.groups[index].members.push(this.newMemberEmail);
           this.groups[index].members = Object.assign([], this.groups[index].members);
        }
-      }      
+      }
       this.newMemberEmail = '';
     }
   }
@@ -44,17 +44,17 @@ export class GroupsManagementComponent {
   showGroupMembers(group: string) {
     this.activeGroup = group;
   }
-  
+
   hideGroupMembers() {
     this.activeGroup = '';
   }
-  
+
   getGroupMembers(group: string): string[] {
     for (var index in this.groups) {
       if(this.groups[index].name == group){
         return this.groups[index].members;
       }
-     }  
-     return ['']; 
+     }
+     return [''];
   }
 }
