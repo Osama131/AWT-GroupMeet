@@ -8,6 +8,7 @@ import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { HeaderComponent } from './header/header.component';
 import { GroupsManagementComponent } from './groups-management/groups-management.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CalendarComponent } from './calendar/calendar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
