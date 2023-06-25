@@ -32,7 +32,6 @@ export class GroupsManagementComponent {
   newMemberEmail: string = '';
   newMemberGroupName: string = '';
   activeGroup: string = '';
-  
   // createGroup() {
   //   if (this.newGroupName.trim()) {
   //     const newGroup: Group = { name: this.newGroupName, members: [] };
@@ -52,21 +51,20 @@ export class GroupsManagementComponent {
   //     this.newMemberEmail = '';
   //   }
   // }
-
   showGroupMembers(group: string) {
     this.activeGroup = group;
   }
-  
+
   hideGroupMembers() {
     this.activeGroup = '';
   }
-  
+
   getGroupMembers(group: string): string[] {
     for (var index in this.groups) {
       if(this.groups[index].name == group){
         return this.groups[index].members;
       }
-     }  
-     return ['']; 
+     }
+     return [''];
   }
 }

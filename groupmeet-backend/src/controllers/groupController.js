@@ -1,4 +1,4 @@
-const Group = require('../models/groupModel')
+const Group = require('../models/group')
 const mongoose = require('mongoose')
 
 // get all groups

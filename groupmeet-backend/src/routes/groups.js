@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-const Group = require("../models/groupModel");
+const Group = require("../models/group");
 const {
   deleteGroup,
   getGroup,
   getGroups,
   updateGroup,
   createGroup
-} = require('../controllers/groupsController')
+} = require('../controllers/groupController')
 
 // GET all groups
 router.get('/', getGroups)
