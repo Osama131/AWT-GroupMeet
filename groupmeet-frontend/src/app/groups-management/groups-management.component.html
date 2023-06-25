@@ -9,12 +9,13 @@
       <p *ngFor="let member of getGroupMembers(group.name)">{{ member }}</p>
     </div>
   </li>
-
+ 
   <!-- <ul class="group-list">
     <li *ngFor="let group of groups" class="group-item">{{ group.name }}</li>
   </ul> -->
+  
 </div>
-
+<!-- 
   <h3>Create a New Group</h3>
   <div class="input-container">
     <input type="text" [(ngModel)]="newGroupName" placeholder="Group Name" class="text-input">
@@ -29,7 +30,7 @@
     </select>
     <input type="text" placeholder="Member Email" [(ngModel)]="newMemberEmail" class="input">
     <button (click)="addMember()" class="btn">Add</button>
-</div>
+</div> -->
 
   <!-- <div class="input-container">
     <input type="text" [(ngModel)]="newMemberGroupName" placeholder="Group Name" class="text-input">
