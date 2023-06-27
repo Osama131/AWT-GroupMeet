@@ -12,16 +12,16 @@ const {
 // GET all groups
 router.get('/', getGroups)
 
-// GET a single groups
+// GET a single group
 router.get('/:id', getGroup)
 
 // POST a new workout
 router.post('/', createGroup)
 
-// DELETE a groups
+// DELETE a group
 router.delete('/:id',deleteGroup)
 
-// UPDATE a groups
+// UPDATE a group
 router.patch('/:id', updateGroup)
 
 

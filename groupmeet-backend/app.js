@@ -13,6 +13,7 @@ var groupsRouter = require('./src/routes/groups');
 var app = express();
 const cors = require('cors');
 app.use(cors());
+app.disable('etag');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -58,8 +59,8 @@ mongoose.connect('mongodb+srv://Abdul:b2sFAN27A9dqoe4V@cluster0.jmvw9bt.mongodb.
   .then(() => {
     console.log('connected to database')
     // listen to port
-    app.listen(process.env.PORT, () => {
-      console.log('listening for requests on port', process.env.PORT)
+    app.listen(3001, () => {
+      console.log('listening for requests on port', 3001)
     })
   })
   .catch((err) => {

@@ -12,13 +12,9 @@ const getGroups = async (req, res) => {
 const getGroup = async (req, res) => {
   const { id } = req.params
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such group'})
-  }
-
-  const group = await Group.findById(id)
-
-  if (!group) {
+  const group = await Group.find({name:id})
+  
+  if (!group || group.length == 0) {
     return res.status(404).json({error: 'No such group'})
   }
 
@@ -41,13 +37,9 @@ const createGroup = async (req, res) => {
 const deleteGroup = async (req, res) => {
     const { id } = req.params
   
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({error: 'No such group'})
-    }
+    const group = await Group.findOneAndDelete({name: id})
   
-    const group = await Group.findOneAndDelete({_id: id})
-  
-    if(!group) {
+    if(!group || group.length == 0) {
       return res.status(400).json({error: 'No such group'})
     }
   
@@ -58,15 +50,11 @@ const deleteGroup = async (req, res) => {
   const updateGroup = async (req, res) => {
     const { id } = req.params
   
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({error: 'No such group'})
-    }
-  
-    const group = await Group.findOneAndUpdate({_id: id}, {
-      ...req.body
+    const group = await Group.findOneAndUpdate({name: id}, {
+      $push:{members: req.body.members}
     })
   
-    if (!group) {
+    if (!group || group.length == 0) {
       return res.status(400).json({error: 'No such group'})
     }
   

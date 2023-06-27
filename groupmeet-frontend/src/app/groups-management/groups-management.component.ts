@@ -11,12 +11,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./groups-management.component.css']
 })
 export class GroupsManagementComponent {
-  // groups: Group[] = [
-  //   { name: 'Group 1', members: [] },
-  //   { name: 'Group 2', members: [] }
-  // ];
 
   public groups: Group[] = [];
+  public groups2: Group[] = [];
+ 
   
   constructor(private httpClient: HttpClient){ }
 
@@ -25,32 +23,62 @@ export class GroupsManagementComponent {
 }
 
   getGroups(): Observable<Group[]>{
-    return this.httpClient.get<Group[]>("http://localhost:3000/groups");
+    return this.httpClient.get<Group[]>("http://localhost:3001/groups");
+  }
+
+  postGroup(data: any) {
+    return this.httpClient.post<any>("http://localhost:3001/groups/", data);
+  }
+
+  UpdateGroup(data: any, name:string) {
+    return this.httpClient.patch<any>("http://localhost:3001/groups/" + name, data);
+  }
+
+  getSingleGroup(name:string){
+    console.log("Name", name);
+    return this.httpClient.get<Group[]>("http://localhost:3001/groups/" + name);
   }
 
   newGroupName: string = '';
   newMemberEmail: string = '';
   newMemberGroupName: string = '';
   activeGroup: string = '';
-  // createGroup() {
-  //   if (this.newGroupName.trim()) {
-  //     const newGroup: Group = { name: this.newGroupName, members: [] };
-  //     this.groups.push(newGroup);
-  //     this.newGroupName = '';
-  //   }
-  // }
+  
+  createGroup(){
+    this.newGroupName = this.newGroupName.trim();
+    let newGroup = {   "name" : this.newGroupName,
+          "             members": []
+                      }
+    this.postGroup(newGroup)
+    .subscribe({
+      next: (res) => {
+        alert("Group Added Successfully");
+      },
+      error: () => {
+        alert("Error while adding the group !!!")
+      }
+    })
+    window.location.reload();
+    }
 
-  // addMember() {
-  //   if (this.newMemberEmail.trim()) {
-  //     for (var index in this.groups) {
-  //      if(this.groups[index].name == this.newMemberGroupName){
-  //         this.groups[index].members.push(this.newMemberEmail);
-  //         this.groups[index].members = Object.assign([], this.groups[index].members);
-  //      }
-  //     }      
-  //     this.newMemberEmail = '';
-  //   }
-  // }
+  addMember() {
+    this.newMemberEmail = this.newMemberEmail.trim()
+    this.newMemberGroupName = this.newMemberGroupName.trim()
+
+    let j = {"members":[this.newMemberEmail]};
+  
+    
+    this.UpdateGroup(j, this.newMemberGroupName).subscribe({
+      next: (res) => {
+        window.location.reload();
+      },
+      error: () => {
+        alert("Error while adding the Member !!!")
+      }
+    });
+   
+  }
+
   showGroupMembers(group: string) {
     this.activeGroup = group;
   }
