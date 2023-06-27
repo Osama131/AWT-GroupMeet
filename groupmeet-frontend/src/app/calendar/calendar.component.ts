@@ -1,81 +1,89 @@
-import { Component } from '@angular/core';
+// references
+// https://github.com/fullcalendar/fullcalendar-examples/tree/main/angular16
+
+import { Component, signal, ChangeDetectorRef } from '@angular/core';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
+import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import { INITIAL_EVENTS, createEventId } from './event-utils';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-
 export class CalendarComponent {
-  private date: Date;
-  private year: number;
-  private month: number;
-  // public months: string[] = [
-  //   "January", "February", "March", "April", "May", "June",
-  //   "July", "August", "September", "October", "November", "December"
-  // ];
-  public calendarDates: number[] = [];
-  public activeDay: number | null = null;
+  calendarVisible = signal(true);
+  calendarOptions = signal<CalendarOptions>({
+    plugins: [
+      interactionPlugin,
+      dayGridPlugin,
+      timeGridPlugin,
+      listPlugin,
+    ],
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    },
+    initialView: 'dayGridMonth',
+    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    weekends: true,
+    editable: true,
+    selectable: true,
+    selectMirror: true,
+    dayMaxEvents: true,
+    select: this.handleDateSelect.bind(this),
+    eventClick: this.handleEventClick.bind(this),
+    eventsSet: this.handleEvents.bind(this)
+    /* you can update a remote database when these fire:
+    eventAdd:
+    eventChange:
+    eventRemove:
+    */
+  });
+  currentEvents = signal<EventApi[]>([]);
 
-  constructor() {
-    this.date = new Date();
-    this.year = this.date.getFullYear();
-    this.month = this.date.getMonth();
-  }
-
-  ngOnInit(): void {
-    this.manipulate();
-  }
-
-  private manipulate(): void {
-    const dayOne = new Date(this.year, this.month, 1).getDay();
-    const lastDate = new Date(this.year, this.month + 1, 0).getDate();
-    const dayEnd = new Date(this.year, this.month, lastDate).getDay();
-    const monthLastDate = new Date(this.year, this.month, 0).getDate();
-    const lit = [];
-
-    // for (let i = dayOne; i > 0; i--) {
-    //   lit.push(monthLastDate - i + 1);
-
-    // }
-
-    for (let i = 1; i <= lastDate; i++) {
-      lit.push(i);
-    }
-
-    for (let i = dayEnd; i < 6; i++) {
-      lit.push(i - dayEnd + 1);
-    }
-    // console.log(`aaaaa ${lit}`); an error with last day
-
-    this.calendarDates = lit;
-  }
-
-  // public updateMonth(isNext: boolean): void {
-  //   this.month = isNext ? this.month + 1 : this.month - 1;
-
-  //   if (this.month < 0 || this.month > 11) {
-  //     this.date = new Date(this.year, this.month, new Date().getDate());
-  //     this.year = this.date.getFullYear();
-  //     this.month = this.date.getMonth();
-  //   } else {
-  //     this.date = new Date();
-  //   }
-
-  //   this.manipulate();
+  // constructor(private changeDetector: ChangeDetectorRef) {
   // }
 
-  public showMessage(day: number): void {
-    this.activeDay = day;
+  handleCalendarToggle() {
+    this.calendarVisible.update((bool) => !bool);
   }
 
-  public hideMessage(day: number): void {
-    if (this.activeDay === day) {
-      this.activeDay = null;
+  handleWeekendsToggle() {
+    this.calendarOptions.mutate((options) => {
+      options.weekends = !options.weekends;
+    });
+  }
+
+  handleDateSelect(selectInfo: DateSelectArg) {
+    const title = prompt('Please enter a new title for your event');
+    const calendarApi = selectInfo.view.calendar;
+
+    // calendarApi.unselect(); // clear date selection
+
+    if (title) {
+      calendarApi.addEvent({
+        id: createEventId(),
+        title,
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
+        allDay: selectInfo.allDay
+      });
     }
   }
 
-  public isMessageVisible(day: number): boolean {
-    return this.activeDay === day;
+  handleEventClick(clickInfo: EventClickArg) {
+    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+      clickInfo.event.remove();
+    }
+  }
+
+  handleEvents(events: EventApi[]) {
+    this.currentEvents.set(events);
+    // this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
   }
 }
