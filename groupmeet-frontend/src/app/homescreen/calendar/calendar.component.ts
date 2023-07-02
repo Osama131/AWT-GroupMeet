@@ -1,7 +1,7 @@
 // references
 // https://github.com/fullcalendar/fullcalendar-examples/tree/main/angular16
 
-import { Component, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, signal, ChangeDetectorRef  } from '@angular/core';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -44,6 +44,8 @@ export class CalendarComponent {
     eventRemove:
     */
   });
+
+
   currentEvents = signal<EventApi[]>([]);
 
   // constructor(private changeDetector: ChangeDetectorRef) {
@@ -86,4 +88,5 @@ export class CalendarComponent {
     this.currentEvents.set(events);
     // this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
   }
+
 }

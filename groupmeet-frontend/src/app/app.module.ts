@@ -6,28 +6,33 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { HeaderComponent } from './header/header.component';
-import { GroupsManagementComponent } from './groups-management/groups-management.component';
-import { CalendarComponent } from './calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import {MatListModule} from '@angular/material/list';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconButton} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HomescreenModule } from './homescreen/homescreen.module';
+import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SidenavComponent,
     // LoginSignupComponent,
     // HeaderComponent,
-    GroupsManagementComponent,
-    CalendarComponent,
+    // GroupsManagementComponent,
+    // CalendarComponent,
+    
 
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
@@ -39,8 +44,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     MatDialogModule,
     LoginSignupComponent,
-    HeaderComponent
-    
+    HeaderComponent,
+    HomescreenModule,
+    NavigationTabsComponent
+
   ],
   providers: [],
   bootstrap: [AppComponent]
