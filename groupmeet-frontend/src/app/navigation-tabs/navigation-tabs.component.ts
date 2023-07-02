@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule, NgFor } from '@angular/common';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTabsModule} from '@angular/material/tabs';
-
-// import { MatTabsModule } from '@angular/material/tabs';
-
-import { HomescreenModule } from '../homescreen/homescreen.module';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
+import { AppRoutingModule } from '../app-routing.module';
+import { Router, NavigationEnd } from '@angular/router';
 
 // import { GroupsManagementComponent } from '../homescreen/groups-management/groups-management.component';
-// import { GroupsManagementComponent } from '../groups-management/groups-management.component';
-// import { CalendarComponent } from '../calendar/calendar.component';
+// import { CalendarComponent } from '../homescreen/calendar/calendar.component';
 
 
 @Component({
@@ -19,11 +15,12 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./navigation-tabs.component.css'],
   standalone: true,
   imports: [
-    MatCardModule,
+    CommonModule,
     MatTabsModule,
     MatSidenavModule,
-    HomescreenModule,
-    MatListModule,
+    AppRoutingModule,
+    // matTabNavBar,
+    NgFor,
     // GroupsManagementComponent,
     // CalendarComponent
   ],
@@ -32,5 +29,22 @@ import { MatCardModule } from '@angular/material/card';
 
 
 export class NavigationTabsComponent {
+  links: { label: string; route: string }[] = [
+    { label: 'Groups', route: '/groups' },
+    { label: 'Calendar', route: '/calendar' }
+  ];
+  activeLink: any;
 
+  constructor(private router: Router) { }
+
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const activeRoute = this.links.find(link => this.router.isActive(link.route, false));
+        if (activeRoute) {
+          this.activeLink = activeRoute;
+        }
+      }
+    });
+  }
 }

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { HeaderComponent } from './header/header.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { MatListModule } from '@angular/material/list';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,12 +17,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HomescreenModule } from './homescreen/homescreen.module';
 import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSidenavModule} from '@angular/material/sidenav';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidenavComponent,
+    // SidenavComponent,
+    // SidenavComponent,
     // LoginSignupComponent,
     // HeaderComponent,
     // GroupsManagementComponent,
@@ -37,7 +39,6 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     FormsModule,
     HttpClientModule,
     FullCalendarModule,
-    MatListModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -46,7 +47,10 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     LoginSignupComponent,
     HeaderComponent,
     HomescreenModule,
-    NavigationTabsComponent
+    NavigationTabsComponent,
+    MatSidenavModule,
+    SidenavComponent
+    
 
   ],
   providers: [],

@@ -6,11 +6,12 @@ import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginSignupComponent },
-  { path: 'home' , component: NavigationTabsComponent},
+  // { path: 'home' , component: NavigationTabsComponent},
+  // { path: 'home', component: SidenavComponent },
   { path: 'groups', component: GroupsManagementComponent },
-  { path: 'calender', component: CalendarComponent },
+  { path: 'calendar', component: CalendarComponent },
+  { path: '', redirectTo: '/groups', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -1,19 +1,9 @@
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
- 
-  <mat-tab label="Groups">
-    <mat-card>
-      <mat-card-content>
-        <app-group-list></app-group-list>
-      </mat-card-content>
-    </mat-card>
-  </mat-tab>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <a mat-tab-link *ngFor="let link of links"
+  [routerLink]="link.route"
+  routerLinkActive #rla="routerLinkActive"
+  [active]="activeLink == link"> {{link.label}} </a>
+</nav>
 
-  <mat-tab label="Calendar">
-    <mat-card>
-      <mat-card-content>
-        <app-calendar></app-calendar>
-      </mat-card-content>
-    </mat-card>
-
-  </mat-tab>
-</mat-tab-group>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+<router-outlet></router-outlet>
