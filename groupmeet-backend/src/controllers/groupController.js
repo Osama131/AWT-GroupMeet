@@ -45,6 +45,18 @@ const deleteGroup = async (req, res) => {
   
     res.status(200).json(group)
   }
+
+  // delete a group member
+const deleteGroupMember = async (req, res) => {
+  const group = await Group.updateOne({ name: req.body.name }, 
+    { $pullAll: { members: [req.body.members] } } )
+
+  if(!group || group.length == 0) {
+    return res.status(400).json({error: 'ERROR'})
+  }
+
+  res.status(200).json(group)
+}
   
   // update a group
   const updateGroup = async (req, res) => {
@@ -66,5 +78,6 @@ module.exports = {
   getGroup,
   createGroup,
   deleteGroup,
-  updateGroup
+  updateGroup,
+  deleteGroupMember
 }

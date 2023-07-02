@@ -6,7 +6,8 @@ const {
   getGroup,
   getGroups,
   updateGroup,
-  createGroup
+  createGroup,
+  deleteGroupMember
 } = require('../controllers/groupController')
 
 // GET all groups
@@ -20,6 +21,9 @@ router.post('/', createGroup)
 
 // DELETE a group
 router.delete('/:id',deleteGroup)
+
+// DELETE a group member
+router.patch('/delete_member',deleteGroupMember)
 
 // UPDATE a group
 router.patch('/:id', updateGroup)
