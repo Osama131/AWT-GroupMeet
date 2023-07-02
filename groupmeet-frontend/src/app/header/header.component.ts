@@ -1,21 +1,15 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  standalone: true,
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule],
 })
 export class HeaderComponent {
-  isLoggedIn: boolean = false; // Set the initial value based on user login status
 
-  constructor(private router: Router) { }
-
-  goToHomePage() {
-    this.router.navigate(['/']); // Navigate to the home page
-  }
-
-  signOut() {
-    // Perform sign out logic
-  }
 }

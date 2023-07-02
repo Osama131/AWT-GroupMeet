@@ -20,8 +20,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginSignupComponent,
-    HeaderComponent,
+    // LoginSignupComponent,
+    // HeaderComponent,
     GroupsManagementComponent,
     CalendarComponent,
 
@@ -38,7 +38,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    
+    LoginSignupComponent,
+    HeaderComponent
     
   ],
   providers: [],
