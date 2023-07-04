@@ -37,7 +37,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 export class LoginSignupComponent {
 
-  constructor(private service: AuthenticateService , private router:Router, private _snackBar: MatSnackBar) { }
+  constructor(private service: AuthenticateService , private router:Router, private snackBar: MatSnackBar) { }
 
   login(event: Event, form: NgForm) {
     event.preventDefault();
@@ -47,7 +47,7 @@ export class LoginSignupComponent {
     if (res) {
       this.router.navigate(['/home']);
     }else{
-      this._snackBar.open("Invalid Credentials", "Dismiss");
+      this.snackBar.open("Invalid Credentials", "Dismiss");
     }
   }
 

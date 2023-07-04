@@ -9,6 +9,7 @@ var logger = require('morgan');
 var indexRouter = require('./src/routes/index');
 var homeRouter = require('./src/routes/home');
 var groupsRouter = require('./src/routes/groups');
+var authRoutes = require('./src/routes/authRoutes');
 
 var app = express();
 const cors = require('cors');
@@ -36,6 +37,8 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/home', homeRouter);
 app.use('/groups', groupsRouter);
+app.use('/auth', authRoutes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

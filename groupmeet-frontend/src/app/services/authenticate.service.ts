@@ -19,7 +19,7 @@ export interface LoginData {
 })
 export class AuthenticateService {
 
-  apiurl: string = environment.API_URL;
+  apiurl: string = environment.API_URL + "/auth";
   loginPath: string = "/login";
 
   constructor(private http: HttpClient) { }
@@ -33,10 +33,13 @@ export class AuthenticateService {
       }
       else { localStorage.setItem('isLoggedIn', 'false'); }
     })
-    return this.isLoggedIn();
+    if (!this.isLoggedIn()) {
+      localStorage.setItem('isLoggedIn', 'false');
+    };
+    return this.isLoggedIn()
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('isLoggedIn') != null;
+    return localStorage.getItem('isLoggedIn') != null || localStorage.getItem('isLoggedIn') == 'true';
   }
 }
