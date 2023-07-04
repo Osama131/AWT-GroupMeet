@@ -5,22 +5,22 @@
     </mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
-  <form>
+  <form #form="ngForm" id="loginForm">
   <mat-card-content class="content">
       <mat-form-field>
         <mat-label>username</mat-label>
-        <input matInput type="text" ng-model="username" required>
+        <input matInput type="text" name="username" ngModel required #username="ngModel">
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>password</mat-label>
-        <input matInput type="password" ng-model="password" required>
+        <input matInput type="password" name="password" ngModel required #password="ngModel">
       </mat-form-field>
   </mat-card-content>
 
   <mat-card-actions class="actions">
-    <button mat-raised-button class="button" (click)="signup()">Sign Up</button>
-    <button mat-raised-button class="button" color="primary" (click)="login()">Login</button>
+    <button mat-raised-button class="button" (click)="signup($event, form)">Sign Up</button>
+    <button mat-raised-button class="button" color="primary" (click)="login($event, form)" prevent>Login</button>
   </mat-card-actions>
   </form>
 </mat-card>

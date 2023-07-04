@@ -3,6 +3,7 @@ import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { Group } from './group';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog'
+import { environment } from '../../../environments/environment';
 
 
 
@@ -26,28 +27,28 @@ export class GroupsManagementComponent {
   }
 
   getGroups(): Observable<Group[]> {
-    return this.httpClient.get<Group[]>("http://localhost:3001/groups");
+    return this.httpClient.get<Group[]>(environment.API_URL + "/groups");
   }
 
   postGroup(data: any) {
-    return this.httpClient.post<any>("http://localhost:3001/groups/", data);
+    return this.httpClient.post<any>(environment.API_URL + "/groups/", data);
   }
 
   UpdateGroup(data: any, name: string) {
-    return this.httpClient.patch<any>("http://localhost:3001/groups/" + name, data);
+    return this.httpClient.patch<any>(environment.API_URL + "/groups/" + name, data);
   }
 
   deleteGroupReq(name: string) {
-    return this.httpClient.delete<any>("http://localhost:3001/groups/" + name);
+    return this.httpClient.delete<any>(environment.API_URL + "/groups/" + name);
   }
 
   deleteGroupMember(info: any) {
-    return this.httpClient.patch<any>("http://localhost:3001/groups/delete_member", info);
+    return this.httpClient.patch<any>(environment.API_URL + "/groups/delete_member", info);
   }
 
   getSingleGroup(name: string) {
     console.log("Name", name);
-    return this.httpClient.get<Group[]>("http://localhost:3001/groups/" + name);
+    return this.httpClient.get<Group[]>(environment.API_URL + "/groups/" + name);
   }
 
   newGroupName: string = '';
