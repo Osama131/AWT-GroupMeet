@@ -1,0 +1,13 @@
+.green-theme {
+    color: #FFFFFF;
+    /* Text color */
+    background-color: #00FF00;
+    /* Background color */
+}
+
+.header-logo {
+    /* max-width: 1%; */
+    max-height: 50px;
+    /* height: auto ;*/
+    width: auto;
+}
