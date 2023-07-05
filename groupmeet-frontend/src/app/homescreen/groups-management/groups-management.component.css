@@ -152,11 +152,11 @@ p.no-members {
   }
 } */
 
-html, body {
+/* html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
+} */
 .group-list-container {
   display: flex;
   flex-direction: column;

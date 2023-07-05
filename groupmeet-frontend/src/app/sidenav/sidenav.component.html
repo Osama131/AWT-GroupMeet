@@ -1,6 +1,6 @@
-<mat-drawer-container>
+<mat-drawer-container class="sidenav-wrapper">
     <mat-drawer mode="side" opened>
-        <mat-nav-list>
+        <mat-nav-list class="list">
             <a mat-list-item *ngFor="let link of links" [routerLink]="link.route" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }">{{ link.label }}</a>
         </mat-nav-list>
