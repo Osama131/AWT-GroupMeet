@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const authController = {
 
@@ -51,6 +52,12 @@ const authController = {
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid password.' });
       }
+
+      // Generate a token containing the user's email
+      const token = jwt.sign({ email: user.email }, 'your-secret-key');
+
+      // Return the token to the frontend
+      res.status(200).json({ token });
 
       // Perform the login action (e.g., create a session or token)
 
