@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 const authController = {
 
@@ -29,7 +29,13 @@ const authController = {
       // Save the user to the database
       await newUser.save();
 
-      res.status(201).json({ message: 'User registered successfully.' });
+      // Generate a token containing the user's email
+      // const token = jwt.sign({ email: user.email }, 'your-secret-key');
+      const token = email;
+      // Return the token to the frontend
+      // res.status(200).json({ token });
+
+      res.status(201).json({ message: 'User registered successfully.', token });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
@@ -54,14 +60,15 @@ const authController = {
       }
 
       // Generate a token containing the user's email
-      const token = jwt.sign({ email: user.email }, 'your-secret-key');
+      // const token = jwt.sign({ email: user.email }, 'your-secret-key');
+      const token =  user.email ;
 
       // Return the token to the frontend
-      res.status(200).json({ token });
+      // res.status(200).json({ token });
 
       // Perform the login action (e.g., create a session or token)
 
-      res.status(200).json({ message: 'User logged in successfully.' });
+      res.status(200).json({ message: 'User logged in successfully.', token });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });

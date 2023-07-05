@@ -3,6 +3,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from '../app-routing.module';
+import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -10,11 +13,24 @@ import { AppRoutingModule } from '../app-routing.module';
   styleUrls: ['./header.component.css'],
   standalone: true,
   imports: [
+    CommonModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    AppRoutingModule],
+    AppRoutingModule,
+    NgIf],
 })
 export class HeaderComponent {
 
+  constructor(private router: Router) { }
+
+  logoutAction() {
+    localStorage.setItem('isLoggedIn', 'false');
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('isLoggedIn') != null && localStorage.getItem('isLoggedIn') == 'true';
+  }
 }

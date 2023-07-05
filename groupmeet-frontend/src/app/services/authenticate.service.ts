@@ -1,18 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { NgForm } from '@angular/forms';
-
-export enum requestType {
-  LOGIN,
-  SIGNUP
-}
-
-export interface LoginData {
-  username?: string;
-  email?: string;
-  password: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -21,25 +9,15 @@ export class AuthenticateService {
 
   apiurl: string = environment.API_URL + "/auth";
   loginPath: string = "/login";
+  signupPath: string = "/register";
 
   constructor(private http: HttpClient) { }
 
-  login(UserCred: any): boolean {
-
-    this.http.post(this.apiurl + this.loginPath, UserCred).subscribe((res: any) => {
-      if (res.status == 200) {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('isLoggedIn', 'true');
-      }
-      else { localStorage.setItem('isLoggedIn', 'false'); }
-    })
-    if (!this.isLoggedIn()) {
-      localStorage.setItem('isLoggedIn', 'false');
-    };
-    return this.isLoggedIn()
+  login(UserCred: any) {
+    return this.http.post(this.apiurl + this.loginPath, UserCred,  {observe: 'response'});
   }
 
-  isLoggedIn(): boolean {
-    return localStorage.getItem('isLoggedIn') != null || localStorage.getItem('isLoggedIn') == 'true';
+  signup(UserCred: any) {
+    return this.http.post(this.apiurl + this.signupPath, UserCred,  {observe: 'response'});
   }
 }

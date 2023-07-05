@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginSignupComponent } from './login-signup/login-signup.component';
+import { LoginComponent } from './authenticate/login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
@@ -44,7 +44,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    LoginSignupComponent,
+    LoginComponent,
     HeaderComponent,
     HomescreenModule,
     NavigationTabsComponent,

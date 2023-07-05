@@ -10,4 +10,6 @@
   <button mat-icon-button>
     <mat-icon>share</mat-icon>
   </button>
+
+  <button mat-button *ngIf="isLoggedIn()" (click)="logoutAction()">logout</button>
 </mat-toolbar>
