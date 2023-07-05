@@ -7,7 +7,7 @@ import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.compo
 
 const routes: Routes = [
   { path: 'login', component: LoginSignupComponent },
-  { path: 'home' , redirectTo: '/groups', pathMatch: 'full'},
+  { path: 'home', redirectTo: '/groups', pathMatch: 'full' },
   // { path: 'home', component: SidenavComponent },
   { path: 'groups', component: GroupsManagementComponent },
   { path: 'calendar', component: CalendarComponent },

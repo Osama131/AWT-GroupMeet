@@ -17,7 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HomescreenModule } from './homescreen/homescreen.module';
 import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
@@ -29,7 +29,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     // HeaderComponent,
     // GroupsManagementComponent,
     // CalendarComponent,
-    
+
 
   ],
   imports: [
@@ -50,7 +50,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     NavigationTabsComponent,
     MatSidenavModule,
     SidenavComponent
-    
+
 
   ],
   providers: [],

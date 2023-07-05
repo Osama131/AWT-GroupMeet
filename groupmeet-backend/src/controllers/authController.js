@@ -2,10 +2,10 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 const authController = {
-  
+
   register: async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { email, name, password } = req.body;
 
       // Check if user with the same email already exists
       const existingUser = await User.findOne({ email });
@@ -16,6 +16,7 @@ const authController = {
       // Create a new user
       const newUser = new User({
         email,
+        name,
         password
       });
 
@@ -27,7 +28,7 @@ const authController = {
       // Save the user to the database
       await newUser.save();
 
-      res.status(200).json({ message: 'User registered successfully.' });
+      res.status(201).json({ message: 'User registered successfully.' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
@@ -38,11 +39,11 @@ const authController = {
 
     try {
       const { email, password } = req.body;
-     
+
       // Check if user with the provided email exists
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(404).json({ error: 'User not found.' });
+        return res.status(401).json({ error: 'User not found.' });
       }
 
       // Compare the provided password with the stored password
