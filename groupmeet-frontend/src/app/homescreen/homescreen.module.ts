@@ -31,11 +31,8 @@ import { Component, signal, ChangeDetectorRef } from '@angular/core';
         MatIconModule,
         MatDialogModule,
         CommonModule,
-        // Component,
-        // signal,
-        // ChangeDetectorRef,
-        
-    
+
+
     ],
     providers: [],
     bootstrap: [GroupsManagementComponent, CalendarComponent],

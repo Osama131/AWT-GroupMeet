@@ -29,12 +29,18 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angu
         MatButtonModule,
         MatDividerModule,
         MatSnackBarModule,
-        ],
+    ],
 })
 
 export class SignupComponent {
 
     constructor(private service: AuthenticateService, private router: Router, private snackBar: MatSnackBar, public dialog: MatDialog) { }
+
+    ngOnInit(): void {
+        if (this.isLoggedIn()) {
+            this.signupProceed();
+        }
+    }
 
     signupAction(event: Event, form: NgForm) {
         event.preventDefault();
@@ -44,7 +50,6 @@ export class SignupComponent {
         };
         // Handle login logic here
         var res = this.service.signup(form.value).subscribe((res: any) => {
-            console.log(res);
             if (res.status == 201) {
                 localStorage.setItem('token', res.body.token);
                 localStorage.setItem('isLoggedIn', 'true');
@@ -84,11 +89,6 @@ export class SignupComponent {
                 data.confirmPassword == '' ||
                 data.password != data.confirmPassword) {
 
-                //print all the data
-                console.log(data);
-
-
-                console.log("baaaad");
                 throw new Error('Null data');
             }
         } catch (e) {

@@ -4,6 +4,7 @@ import { Group } from './group';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog'
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 
 
@@ -20,9 +21,14 @@ export class GroupsManagementComponent {
   @ViewChild('groupMembersDialog') infoDialog = {} as TemplateRef<any>;
   @ViewChild('addMemberDialog') memberDialog = {} as TemplateRef<any>;
 
-  constructor(private httpClient: HttpClient, private dialogRef: MatDialog) { }
+  constructor(private httpClient: HttpClient, private dialogRef: MatDialog, private router: Router ) { }
 
   ngOnInit() {
+
+    if (localStorage.getItem('isLoggedIn') != 'true') {
+      this.router.navigate(['/login']);
+    }
+
     this.getGroups().subscribe(data => this.groups = data);
   }
 

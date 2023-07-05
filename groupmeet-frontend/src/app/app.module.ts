@@ -56,4 +56,6 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

@@ -37,6 +37,12 @@ export class LoginComponent {
 
   constructor(private service: AuthenticateService, private router: Router, private snackBar: MatSnackBar, public dialog: MatDialog) { }
 
+  ngOnInit(): void {
+    if (this.isLoggedIn()) {
+      this.loginProceed();
+    }
+  }
+
   loginAction(event: Event, form: NgForm) {
     event.preventDefault();
     if (!this.dataValidation(form.value)) {

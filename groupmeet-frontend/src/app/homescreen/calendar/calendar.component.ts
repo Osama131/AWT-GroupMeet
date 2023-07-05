@@ -1,13 +1,14 @@
 // references
 // https://github.com/fullcalendar/fullcalendar-examples/tree/main/angular16
 
-import { Component, signal, ChangeDetectorRef  } from '@angular/core';
+import { Component, signal, ChangeDetectorRef } from '@angular/core';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -48,8 +49,15 @@ export class CalendarComponent {
 
   currentEvents = signal<EventApi[]>([]);
 
-  // constructor(private changeDetector: ChangeDetectorRef) {
-  // }
+  constructor(private router: Router) {
+  }
+
+  ngOnInit() {
+
+    if (localStorage.getItem('isLoggedIn') != 'true') {
+      this.router.navigate(['/login']);
+    }
+  }
 
   handleCalendarToggle() {
     this.calendarVisible.update((bool) => !bool);
