@@ -9,6 +9,7 @@ var logger = require('morgan');
 var indexRouter = require('./src/routes/index');
 var homeRouter = require('./src/routes/home');
 var groupsRouter = require('./src/routes/groups');
+var eventsRouter = require('./src/routes/events');
 var authRoutes = require('./src/routes/authRoutes');
 
 var app = express();
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/home', homeRouter);
 app.use('/groups', groupsRouter);
+app.use('/events', eventsRouter);
 app.use('/auth', authRoutes);
 
 

@@ -13,16 +13,15 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  attendees: [
+  creator: {
+    type: String
+  },
+  group: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'Group'
     }
   ],
-  creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }
 });
 
 const Event = mongoose.model('Event', eventSchema);
