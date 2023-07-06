@@ -2,19 +2,27 @@
 // https://github.com/fullcalendar/fullcalendar-examples/tree/main/angular16
 
 import { Component, signal, ChangeDetectorRef } from '@angular/core';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
-import interactionPlugin from '@fullcalendar/interaction';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
+import  interactionPlugin  from '@fullcalendar/interaction';
+import  dayGridPlugin      from '@fullcalendar/daygrid';
+import  timeGridPlugin     from '@fullcalendar/timegrid';
+import  listPlugin         from '@fullcalendar/list';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
+  standalone: true,
+  imports: [
+    FullCalendarModule,
+    NgIf,
+  ],
 })
+
 export class CalendarComponent {
   calendarVisible = signal(true);
   calendarOptions = signal<CalendarOptions>({
@@ -23,6 +31,7 @@ export class CalendarComponent {
       dayGridPlugin,
       timeGridPlugin,
       listPlugin,
+      
     ],
     headerToolbar: {
       left: 'prev,next today',
