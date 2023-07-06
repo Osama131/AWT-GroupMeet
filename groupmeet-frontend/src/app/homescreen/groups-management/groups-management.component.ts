@@ -21,6 +21,7 @@ export class GroupsManagementComponent {
   dialog: any;
   @ViewChild('groupMembersDialog') infoDialog = {} as TemplateRef<any>;
   @ViewChild('addMemberDialog') memberDialog = {} as TemplateRef<any>;
+  @ViewChild('addMemberErrorDialog') memberErrorDialog = {} as TemplateRef<any>;
 
   constructor(private httpClient: HttpClient, private dialogRef: MatDialog, private router: Router ) { }
 
@@ -132,13 +133,23 @@ export class GroupsManagementComponent {
             window.location.reload();
           },
           error: () => {
-            alert("No such user found, please check the email address")
+            this.openAddMemberErrorDialog();
+            // alert("No such user found, please check the email address")
           }
         });
       }
     });
   }
   onCancelAddDialog() {
+    this.dialog.close();
+  }
+
+  openAddMemberErrorDialog() {
+    this.dialog = this.dialogRef.open(this.memberErrorDialog,
+      {height: '350px', width: '350px' });
+  }
+
+  onCancelAddErrorDialog() {
     this.dialog.close();
   }
 
