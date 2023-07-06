@@ -17,6 +17,7 @@ export class GroupsManagementComponent {
 
   public groups: Group[] = [];
   public groups2: Group[] = [];
+  cur_user:any = localStorage.getItem('token');
   dialog: any;
   @ViewChild('groupMembersDialog') infoDialog = {} as TemplateRef<any>;
   @ViewChild('addMemberDialog') memberDialog = {} as TemplateRef<any>;
@@ -33,7 +34,7 @@ export class GroupsManagementComponent {
   }
 
   getGroups(): Observable<Group[]> {
-    return this.httpClient.get<Group[]>(environment.API_URL + "/groups");
+    return this.httpClient.get<Group[]>(environment.API_URL + "/groups/"+this.cur_user);
   }
 
   postGroup(data: any) {
@@ -68,7 +69,7 @@ export class GroupsManagementComponent {
     this.newGroupName = this.newGroupName.trim();
     let newGroup = {
       "name": this.newGroupName,
-      "members": []
+      "members": [this.cur_user]
     }
     this.postGroup(newGroup)
       .subscribe({
@@ -131,7 +132,7 @@ export class GroupsManagementComponent {
             window.location.reload();
           },
           error: () => {
-            alert("Error while adding the Member !!!")
+            alert("No such user found, please check the email address")
           }
         });
       }

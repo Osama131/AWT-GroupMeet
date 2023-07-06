@@ -11,7 +11,7 @@ const {
 } = require('../controllers/groupController')
 
 // GET all groups
-router.get('/', getGroups)
+router.get('/:cur_usr', getGroups)
 
 // GET a single group
 router.get('/:id', getGroup)

@@ -1,9 +1,11 @@
 const Group = require('../models/group')
+const User = require('../models/user')
 const mongoose = require('mongoose')
 
 // get all groups
 const getGroups = async (req, res) => {
-  const groups = await Group.find({})
+  const {cur_usr} = req.params;
+  const groups = await Group.find({members: cur_usr})
 
   res.status(200).json(groups)
 }
@@ -61,7 +63,12 @@ const deleteGroupMember = async (req, res) => {
   // update a group
   const updateGroup = async (req, res) => {
     const { id } = req.params
-  
+    const user = await User.find({email:req.body.members})
+
+    if (!user || user.length == 0) {
+      return res.status(404).json({error: 'No such user found'})
+    }
+
     const group = await Group.findOneAndUpdate({name: id}, {
       $push:{members: req.body.members}
     })
