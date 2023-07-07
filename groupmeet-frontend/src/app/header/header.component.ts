@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {   }
 
   logoutAction() {
     localStorage.setItem('isLoggedIn', 'false');
@@ -32,5 +32,9 @@ export class HeaderComponent {
 
   isLoggedIn(): boolean {
     return localStorage.getItem('isLoggedIn') != null && localStorage.getItem('isLoggedIn') == 'true';
+  }
+
+  github(){
+    window.location.href ='https://github.com/Osama131/AWT-GroupMeet';
   }
 }
