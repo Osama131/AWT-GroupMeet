@@ -7,21 +7,24 @@ const eventSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+  },
+  start: {
+    type: String,
     required: true
   },
-  date: {
-    type: Date,
+  end: {
+    type: String,
     required: true
   },
-  creator: {
-    type: String
-  },
-  group: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Group'
-    }
-  ],
+  // creator: {
+  //   type: String
+  // },
+  // group: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Group'
+  //   }
+  // ],
 });
 
 const Event = mongoose.model('Event', eventSchema);

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,7 +18,12 @@ import { HomescreenModule } from './homescreen/homescreen.module';
 import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {NgFor} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,10 +54,20 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     HomescreenModule,
     NavigationTabsComponent,
     MatSidenavModule,
-    SidenavComponent
-
+    SidenavComponent,
+    MatMenuModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    NgFor
 
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [],
   bootstrap: [AppComponent]
 })

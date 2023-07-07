@@ -1,14 +1,25 @@
 // references
 // https://github.com/fullcalendar/fullcalendar-examples/tree/main/angular16
 
-import { Component, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, signal, ChangeDetectorRef, TemplateRef, ViewChild, NgModule  } from '@angular/core';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { INITIAL_EVENTS, createEventId } from './event-utils';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog'
+import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
+import { Group } from '../groups-management/group';
+import { Event } from './event';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { EventInput } from '@fullcalendar/core';
+import { map } from 'rxjs/operators';
+import { EventType } from '@angular/router';
+import { response } from 'express';
+
+
+const TODAY_STR = new Date("2023-07-16").toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
 
 @Component({
   selector: 'app-calendar',
@@ -16,13 +27,39 @@ import { Router } from '@angular/router';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent {
-  calendarVisible = signal(true);
-  calendarOptions = signal<CalendarOptions>({
+  public user_events: Event[] = [];
+  INITIAL_EVENTS: EventInput[] = []
+  calendarVisible = signal(false);
+  calendarOptions: CalendarOptions
+  public groups: Group[] = [];
+  chosen_group:any = '';
+  cur_user = localStorage.getItem('token');
+
+  constructor(private httpClient: HttpClient, private dialogRef: MatDialog) { 
+  }
+  ngOnInit() {
+    this.getGroups().subscribe(data => this.groups = data);
+    this.getEvents().subscribe(data => this.user_events = data);
+
+    
+    setTimeout(() => {
+      let eventGuid = 0;
+      for(let i = 0; i<this.user_events.length;i++)
+   {
+    console.log(this.user_events[i]['title'])
+    console.log(this.user_events[i]['start'])
+    console.log(this.user_events[i]['end'])
+     this.INITIAL_EVENTS.push({id:String(1), title: this.user_events[i]['title'], start: this.user_events[i]['start'], end: this.user_events[i]['end']})
+     eventGuid++;
+   }  
+
+   this.calendarOptions = {
     plugins: [
       interactionPlugin,
       dayGridPlugin,
       timeGridPlugin,
       listPlugin,
+      
     ],
     headerToolbar: {
       left: 'prev,next today',
@@ -30,7 +67,8 @@ export class CalendarComponent {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    events: this.INITIAL_EVENTS,
+    // initialEvents: new INITS(this.httpClient, this.dialogRef).INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
@@ -39,51 +77,52 @@ export class CalendarComponent {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this)
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
-  });
+  };
+  console.log(this.calendarOptions)
+  console.log(this.user_events)
+  console.log(this.INITIAL_EVENTS)
+      this.calendarVisible = signal(true);
+  console.log(this.calendarOptions)
+       }, 1000);
+       
+    // console.log('het',new INITS(this.httpClient, this.dialogRef).doGet())
+  }
 
+  getGroups(): Observable<Group[]> {
+    return this.httpClient.get<Group[]>(environment.API_URL + "/groups/"+localStorage.getItem('token'));
+  }
+  getEvents(): Observable<any[]> {
+    return this.httpClient.get<any[]>(environment.API_URL + "/events/"+localStorage.getItem('token'));
+  }
 
+  PostEvent(eventTitle: any, eventGroup: string, selectInfo:any) {
+    const str_date = new Date(selectInfo.startStr).toISOString().replace(/T.*$/, '')+ 'T13:00:00';
+    const end_date = new Date(selectInfo.startStr).toISOString().replace(/T.*$/, '')+ 'T15:00:00';
+    
+    let data = {title: eventTitle, group: eventGroup, start :str_date, end: end_date, user_mail:this.cur_user}
+    console.log(data);
+    return this.httpClient.post<any>(environment.API_URL + "/events/", data);
+  }
+ 
+
+  dialog: any;
+  @ViewChild('addEventDialog') eventDialog = {} as TemplateRef<any>;
   currentEvents = signal<EventApi[]>([]);
+  eventDetails = {title:'', group:''};
 
-  constructor(private router: Router) {
-  }
+  // constructor(private changeDetector: ChangeDetectorRef) {
+  // }
 
-  ngOnInit() {
-
-    if (localStorage.getItem('isLoggedIn') != 'true') {
-      this.router.navigate(['/login']);
-    }
-  }
-
-  handleCalendarToggle() {
-    this.calendarVisible.update((bool) => !bool);
-  }
-
-  handleWeekendsToggle() {
-    this.calendarOptions.mutate((options) => {
-      options.weekends = !options.weekends;
-    });
-  }
-
-  handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
+  async handleDateSelect(selectInfo: DateSelectArg) {
+    
+    const st = await this.openAddEventDialog(selectInfo);
+    const title = this.eventDetails.title;
     const calendarApi = selectInfo.view.calendar;
 
     // calendarApi.unselect(); // clear date selection
+    console.log(selectInfo);
 
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
+    this.eventDetails = {title:'', group: ''};
   }
 
   handleEventClick(clickInfo: EventClickArg) {
@@ -95,6 +134,31 @@ export class CalendarComponent {
   handleEvents(events: EventApi[]) {
     this.currentEvents.set(events);
     // this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
+  }
+
+  async openAddEventDialog(selectInfo: any) {
+    this.dialog = this.dialogRef.open(this.eventDialog,
+      { data: this.eventDetails, height: '350px', width: '350px' });
+      console.log('Here');
+      await this.dialog.afterClosed().toPromise().then((result: any) => {
+        console.log(result);
+        if (result.title.trim() != '' && result.group.trim() != '') {
+
+          this.PostEvent(this.eventDetails.title, this.eventDetails.group, selectInfo).subscribe({
+            next: (res) => {
+              window.location.reload();
+            },
+            error: () => {
+              // this.openAddMemberErrorDialog();
+              alert("Error while adding the event, please try again");
+            }
+          });
+        }
+      });
+
+  }
+  onCancelDialog() {
+    this.dialog.close();
   }
 
 }
