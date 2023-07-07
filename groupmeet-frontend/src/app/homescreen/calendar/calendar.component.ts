@@ -16,7 +16,20 @@ import { EventInput } from '@fullcalendar/core';
 import { map } from 'rxjs/operators';
 import { EventType } from '@angular/router';
 import { response } from 'express';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule, NgFor } from '@angular/common';
+import { MatListOption } from '@angular/material/list';
+import { MatSelectionList } from '@angular/material/list';
+import { MatSelectionListChange } from '@angular/material/list';
+import { FormsModule, NgModel } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const TODAY_STR = new Date("2023-07-16").toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -31,6 +44,16 @@ import { NgIf } from '@angular/common';
   imports: [
     FullCalendarModule,
     NgIf,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    CommonModule,
+    NgFor,
+    FormsModule,
+    HttpClientModule,
   ],
 })
 
