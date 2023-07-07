@@ -3,6 +3,9 @@ import { NgForOf } from '@angular/common';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { AppRoutingModule } from '../app-routing.module';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,13 +17,22 @@ import { AppRoutingModule } from '../app-routing.module';
     MatSidenavModule,
     MatListModule,
     AppRoutingModule,
-    NgForOf
+    NgForOf,
+    MatButtonModule,
+    AppRoutingModule,
+    MatIconModule
   ],
 })
 
 export class SidenavComponent {
-  links: { label: string; route: string }[] = [
-    { label: 'Groups', route: 'groups' },
-    { label: 'Calendar', route: 'calendar' }
+
+  constructor(private router: Router) { }
+  links: { label: string; route: string, icon: string }[] = [
+    { label: 'Groups', route: 'groups', icon: 'supervisor_account' },
+    { label: 'Calendar', route: 'calendar', icon: 'calendar_today' },
   ];
+
+  onCreate() {
+    this.router.navigate(['/calendar/create']);
+  }
 }

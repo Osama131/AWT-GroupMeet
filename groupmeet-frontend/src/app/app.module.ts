@@ -14,7 +14,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HomescreenModule } from './homescreen/homescreen.module';
 import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -24,17 +23,12 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {NgFor} from '@angular/common';
+import { GroupsManagementComponent } from './homescreen/groups-management/groups-management.component';
+import { CalendarComponent } from './homescreen/calendar/calendar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // SidenavComponent,
-    // SidenavComponent,
-    // LoginSignupComponent,
-    // HeaderComponent,
-    // GroupsManagementComponent,
-    // CalendarComponent,
-
 
   ],
   imports: [
@@ -51,7 +45,6 @@ import {NgFor} from '@angular/common';
     MatDialogModule,
     LoginComponent,
     HeaderComponent,
-    HomescreenModule,
     NavigationTabsComponent,
     MatSidenavModule,
     SidenavComponent,
@@ -64,7 +57,11 @@ import {NgFor} from '@angular/common';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    NgFor
+    NgFor,
+    GroupsManagementComponent,
+    CalendarComponent,
+    // AppComponent,
+
 
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
