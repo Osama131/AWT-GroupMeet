@@ -7,15 +7,18 @@ const mongoose = require('mongoose')
 const getEvents = async (req, res) => {
   try {
     const {cur_usr} = req.params;
-    const user = await User.find({email: cur_usr})
-    let events_ids = user[0]["events"];
-    // const ev = await Event.find({_id: events_ids[0]})
+    const groups = await Group.find({members: cur_usr})
     const events_list = [];
-    for(let i=0;i<events_ids.length;i++)
+    for(let i=0;i<groups.length;i++)
     {
-      const ev = await Event.find({_id: events_ids[i]})
+      for(let j=0;j<groups[i]["events"].length;j++)
+    {
+      const ev = await Event.find({_id: groups[i]["events"][j]})
       events_list.push(ev[0]);
     }
+
+    }
+
     res.status(200).json(events_list);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
@@ -33,10 +36,7 @@ const createEvent = async (req, res) => {
     const target_group = await Group.findOneAndUpdate({name: group}, {
       $push:{events: event}
     })
-    // TODO: update all group members as well
-    const target_user = await User.findOneAndUpdate({email: user_mail}, {
-      $push:{events: event}
-    })
+
     res.status(200).json(event)
   } catch (error) {
     res.status(400).json({error: error.message})
