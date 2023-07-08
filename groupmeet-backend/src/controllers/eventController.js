@@ -10,7 +10,7 @@ exports.createEvent = async (req, res) => {
       title,
       description,
       date,
-      participants,
+      group,
     });
 
     res.status(201).json({ success: true, event });

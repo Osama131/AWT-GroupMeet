@@ -16,7 +16,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconButton} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import { AboutPageComponent } from './about-page/about-page.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     HeaderComponent,
     GroupsManagementComponent,
     CalendarComponent,
-
+    AboutPageComponent
   ],
   imports: [
     BrowserModule,
@@ -32,14 +34,14 @@ import {MatDialogModule} from '@angular/material/dialog';
     FormsModule,
     HttpClientModule,
     FullCalendarModule,
+    MatGridListModule,
     MatListModule,
+    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    
-    
   ],
   providers: [],
   bootstrap: [AppComponent]

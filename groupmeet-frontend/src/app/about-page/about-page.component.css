@@ -1,0 +1,151 @@
+*{
+  margin: -35px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  margin: 0;
+  margin-bottom: -35px;
+  background-color: #f2f2f2;
+}
+.heading{
+
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 40px auto;
+}
+.heading h1{
+  font-size: 40px;
+  color: #000;
+  /* margin-bottom: 80px; */
+  position: relative;
+
+}
+.heading h1::after {
+  margin-top: 5px;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  display: block;
+  background-color: #4caf50;
+}
+
+.heading p{
+
+  font-size: 18px;
+  color: #666;
+  margin-bottom: -10px;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+
+}
+
+.about {
+  margin: 10px;
+
+  display: flex;
+  justify-content: flex-end; /* Aligns the content to the right */
+  align-items: flex-start; /* Aligns the content to the top */
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+
+}
+
+.about-image {
+  max-width: 100%;
+  height: 40%;
+  display: block;
+
+  /* flex: 0 0 auto; */
+  margin-right: 40px;
+  overflow: hidden;
+  transition: all 0.2 ease;
+}
+
+.about-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transition: all 0.2s ease;
+
+}
+
+.container {
+  width: 90%;
+  margin:0 auto;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+
+}
+
+.read-more {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  /* transform: translate(0, -50%); */
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 19px;
+  text-decoration: none;
+  border-radius: 25px;
+  margin-top: 55px;
+  transition: all 0.3s ease;
+}
+
+.read-more:hover {
+  background-color: #3e8e4f;
+}
+.about-content {
+  margin: 40% auto;
+  /* flex: 1; */
+  margin-top: -300px;
+  margin-right: -700px;
+  text-align: left;
+  text-align: center;
+  transition: all 0.3s ease;
+
+}
+
+.about-content h2 {
+  font-size: 23px;
+  margin-bottom: 60px;
+  color: #333;
+  transition: all 0.3s ease;
+
+
+}
+
+.about-content p {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #666;
+  margin-top: -60px;
+  transition: all 0.3s ease;
+
+
+}
+
+.example-card {
+  position: fixed;
+  bottom: 10%;
+  text-align: center;
+  /* left: 50%; */
+  width: 100%;
+  transition: all 0.3s ease;
+
+}
+

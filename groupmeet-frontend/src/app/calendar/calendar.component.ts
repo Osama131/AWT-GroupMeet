@@ -114,10 +114,6 @@ export class CalendarComponent implements OnInit {
     // calendarApi.unselect(); // clear date selection
 
     if (title) {
-      // this.http.get<Group[]>('/api/groups').subscribe(
-      //   (groups: Group[]) => {
-      //     const dropdownOptions = groups.map(group => group.name); // Assuming the group object has a 'name' property
-      //     const selectedOption = prompt('Please select a group from the dropdown:\n' + dropdownOptions.join('\n'));
 
       const dropdownOptions = ['Option 1', 'Option 2', 'Option 3']; // Example dropdown options
       const selectedOption = prompt('Please select an option from the dropdown:\n' + dropdownOptions.join('\n'));

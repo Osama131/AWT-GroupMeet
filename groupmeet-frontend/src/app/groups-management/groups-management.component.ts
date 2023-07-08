@@ -18,7 +18,7 @@ export class GroupsManagementComponent {
   dialog: any;
   @ViewChild('groupMembersDialog') infoDialog = {} as TemplateRef<any>;
   @ViewChild('addMemberDialog') memberDialog = {} as TemplateRef<any>;
-  
+
   constructor(private httpClient: HttpClient, private dialogRef:MatDialog){ }
 
   ngOnInit() {
@@ -59,8 +59,7 @@ export class GroupsManagementComponent {
   // Create a new group
   createGroup(){
     this.newGroupName = this.newGroupName.trim();
-    let newGroup = {   "name" : this.newGroupName,
-                       "members": []
+    let newGroup = {   "name" : this.newGroupName,     "members": []
                       }
     this.postGroup(newGroup)
     .subscribe({
@@ -88,7 +87,7 @@ export class GroupsManagementComponent {
       }
     })
     window.location.reload();
-    
+
   }
 
   // Get members of a group
@@ -118,7 +117,7 @@ export class GroupsManagementComponent {
       console.log(result);
       if(result.members != ''){
       let newMailUpated = {"members":[newMail.members.trim()]};
-  
+
     this.UpdateGroup(newMailUpated, groupName).subscribe({
       next: (res) => {
         window.location.reload();
@@ -127,7 +126,7 @@ export class GroupsManagementComponent {
         alert("Error while adding the Member !!!")
       }
     });
-  }  
+  }
     });
   }
   onCancelAddDialog() {
