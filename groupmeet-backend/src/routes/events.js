@@ -3,17 +3,18 @@ var router = express.Router();
 const Event = require("../models/event");
 const {
   getEvents,
-  createEvent
+  createEvent,
+  createPrivateEvent
 } = require('../controllers/eventController')
 
 // GET all events
 router.get('/:cur_usr', getEvents)
 
-// GET a single group
-// router.get('/:id', getGroup)
-
 // POST a new event
 router.post('/', createEvent)
+
+// POST a new private event
+router.post('/private', createPrivateEvent)
 
 // DELETE a group
 // router.delete('/:id',deleteGroup)
