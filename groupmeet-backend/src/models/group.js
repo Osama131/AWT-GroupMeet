@@ -11,6 +11,11 @@ const groupSchema = new mongoose.Schema({
       type: String,
     }
   ],
+  creator:
+    {
+      type: String,
+    }
+    ,
   events: [
     {
       type: mongoose.Schema.Types.ObjectId,

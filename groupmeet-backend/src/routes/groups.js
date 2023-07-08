@@ -20,7 +20,7 @@ router.get('/:id', getGroup)
 router.post('/', createGroup)
 
 // DELETE a group
-router.delete('/:id',deleteGroup)
+router.delete('/:id/:cur_usr',deleteGroup)
 
 // DELETE a group member
 router.patch('/delete_member',deleteGroupMember)

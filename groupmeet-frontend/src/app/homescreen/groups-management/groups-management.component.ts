@@ -73,8 +73,8 @@ export class GroupsManagementComponent {
     return this.httpClient.patch<any>(environment.API_URL + "/groups/" + name, data);
   }
 
-  deleteGroupReq(name: string) {
-    return this.httpClient.delete<any>(environment.API_URL + "/groups/" + name);
+  deleteGroupReq(name: string, cur_user:any) {
+    return this.httpClient.delete<any>(environment.API_URL + "/groups/" + name + '/' + cur_user);
   }
 
   deleteGroupMember(info: any) {
@@ -116,7 +116,7 @@ export class GroupsManagementComponent {
 
   // Delete a group
   deleteGroup(group: string) {
-    this.deleteGroupReq(group)
+    this.deleteGroupReq(group, this.cur_user)
       .subscribe({
         next: (res) => {
           this.snackBar.open(res.message, "Dismiss");
@@ -150,7 +150,7 @@ export class GroupsManagementComponent {
 
   // Add a new member
   openAddMemberDialog(groupName: string) {
-    let newMail = { members: '' }
+    let newMail = { members: '', groupName:groupName }
     this.dialog = this.dialogRef.open(this.memberDialog,
       { data: newMail, height: '350px', width: '350px' });
 
@@ -158,7 +158,6 @@ export class GroupsManagementComponent {
       console.log(result);
       if (result.value.members != '') {
         let newMailUpated = { "members": [newMail.members.trim()] };
-
         this.UpdateGroup(newMailUpated, groupName).subscribe({
           next: (res) => {
             window.location.reload();
@@ -176,7 +175,6 @@ export class GroupsManagementComponent {
     var email:string  = pairEmail.value;
     if (email != '') {
       let newMailUpated = { "members": [email.trim()] };
-
       this.UpdateGroup(newMailUpated, groupName).subscribe({
         next: (res) => {
           window.location.reload();
