@@ -66,6 +66,10 @@ const deleteGroup = async (req, res) => {
 
   // delete a group member
 const deleteGroupMember = async (req, res) => {
+
+  const check_group = await Group.find({name:req.body.name})
+
+  if(req.body.cur_user == req.body.members || req.body.cur_user == check_group[0].creator){
   const group = await Group.updateOne({ name: req.body.name }, 
     { $pullAll: { members: [req.body.members] } } )
   
@@ -80,6 +84,11 @@ const deleteGroupMember = async (req, res) => {
   }
 
   res.status(200).json(group)
+}
+else
+{
+  return res.status(400).json({error: 'Please make sure you have admin right'})
+}
 }
   
   // update a group
