@@ -4,7 +4,8 @@ const Event = require("../models/event");
 const {
   getEvents,
   createEvent,
-  createPrivateEvent
+  createPrivateEvent,
+  deleteEvent
 } = require('../controllers/eventController')
 
 // GET all events
@@ -16,14 +17,9 @@ router.post('/', createEvent)
 // POST a new private event
 router.post('/private', createPrivateEvent)
 
-// DELETE a group
-// router.delete('/:id',deleteGroup)
+// DELETE an event
+router.delete('/:id/:cur_usr',deleteEvent)
 
-// DELETE a group member
-// router.patch('/delete_member',deleteGroupMember)
-
-// UPDATE a group
-// router.patch('/:id', updateGroup)
 
 
 module.exports = router;

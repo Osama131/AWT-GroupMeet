@@ -16,16 +16,13 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // creator: {
-  //   type: String
-  // },
-  // group: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Group'
-  //   }
-  // ],
+  creator: {
+    type: String
+  },
+
 });
+
+eventSchema.index({ title: 1, creator: 1 }, { unique: true });
 
 const Event = mongoose.model('Event', eventSchema);
 

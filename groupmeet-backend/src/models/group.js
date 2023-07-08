@@ -4,7 +4,6 @@ const groupSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
   },
   members: [
     {
@@ -23,6 +22,8 @@ const groupSchema = new mongoose.Schema({
     }
   ],
 });
+
+groupSchema.index({ name: 1, creator: 1 }, { unique: true });
 
 const Group = mongoose.model('Group', groupSchema);
 

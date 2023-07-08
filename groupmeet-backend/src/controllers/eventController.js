@@ -40,9 +40,11 @@ const getEvents = async (req, res) => {
 const createEvent = async (req, res) => {
 
   const {title, group, start, end, user_mail} = req.body;
+  const description = "public"
+  const creator = user_mail
 
   try {
-    const event = await Event.create({title, start, end})
+    const event = await Event.create({title, start, end, description,creator})
     const target_group = await Group.findOneAndUpdate({name: group}, {
       $push:{events: event}
     })
@@ -58,9 +60,10 @@ const createEvent = async (req, res) => {
 const createPrivateEvent = async (req, res) => {
 
   const {title, start, end, user_mail} = req.body;
-
+  const description = "private"
+  const creator = user_mail
   try {
-    const event = await Event.create({title, start, end})
+    const event = await Event.create({title, start, end, description,creator})
     const target_user = await User.findOneAndUpdate({email: user_mail}, {
       $push:{events: event}
     })
@@ -71,8 +74,37 @@ const createPrivateEvent = async (req, res) => {
   }
 }
 
+// delete an event
+const deleteEvent = async (req, res) => {
+    const { id, cur_usr } = req.params
+
+    const target_event = await Event.find({title: id, creator: cur_usr})
+    if(!target_event || target_event.length == 0) {
+      return res.status(400).json({error: 'You need admin rights to delete this event'})
+    }
+    const description = target_event[0]['description']
+    if(description == "public")
+    {
+      const group = await Group.findOneAndUpdate({ events:[target_event[0]._id] }, 
+            { $pullAll: { events: [target_event[0]._id] } } )
+     const events = await Event.findOneAndDelete({title: id, creator: cur_usr})
+
+    }
+    else
+    {
+      const user = await User.findOneAndUpdate({ email: cur_usr }, 
+        { $pullAll: { events: [target_event[0]._id] } } )
+
+      const events = await Event.findOneAndDelete({title: id, creator: cur_usr})
+
+    }
+  
+    res.status(200).json({sucess:"Deleted"})
+  }
+
 module.exports = {
  getEvents,
  createEvent,
- createPrivateEvent
+ createPrivateEvent,
+ deleteEvent
 }

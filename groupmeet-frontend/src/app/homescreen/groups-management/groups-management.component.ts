@@ -157,7 +157,7 @@ export class GroupsManagementComponent {
     this.dialog.afterClosed().subscribe((result: NgModel) => {
       console.log(result);
       if (result.value.members != '') {
-        let newMailUpated = { "members": [newMail.members.trim()] };
+        let newMailUpated = { "members": [newMail.members.trim()] , "cur_user": this.cur_user};
         this.UpdateGroup(newMailUpated, groupName).subscribe({
           next: (res) => {
             window.location.reload();
@@ -174,7 +174,7 @@ export class GroupsManagementComponent {
   onDialogAddAction(pairEmail: NgModel, groupName: string) {
     var email:string  = pairEmail.value;
     if (email != '') {
-      let newMailUpated = { "members": [email.trim()] };
+      let newMailUpated = { "members": [email.trim()] , "cur_user": this.cur_user};
       this.UpdateGroup(newMailUpated, groupName).subscribe({
         next: (res) => {
           window.location.reload();
@@ -203,7 +203,7 @@ export class GroupsManagementComponent {
   }
 
   removeMember(groupName: string, member: string) {
-    let info = { "name": groupName.trim(), "members": member.trim() };
+    let info = { "name": groupName.trim(), "members": member.trim(), "cur_user": this.cur_user };
 
     this.deleteGroupMember(info)
       .subscribe({

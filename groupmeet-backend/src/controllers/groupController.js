@@ -91,17 +91,17 @@ const deleteGroupMember = async (req, res) => {
       return res.status(404).json({error: 'No such user found'})
     }
 
-    const group = await Group.findOneAndUpdate({name: id}, {
+    const group = await Group.findOneAndUpdate({name: id, creator: req.body.cur_user}, {
       $push:{members: req.body.members}
     })
     
-    const target_group = await Group.find({name: id})
+    const target_group = await Group.find({name: id, creator: req.body.cur_user})
     const target_user = await User.findOneAndUpdate({email: req.body.members}, {
       $push:{groups: target_group}
     })
 
     if (!group || group.length == 0) {
-      return res.status(400).json({error: 'No such group'})
+      return res.status(400).json({error: 'Please make sure you have admin right'})
     }
   
     res.status(200).json(group)
