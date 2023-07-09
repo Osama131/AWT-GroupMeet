@@ -1,0 +1,146 @@
+*{
+  margin: -35px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.heading{
+  margin-left: 50%;
+  margin-right: 10%;
+  /* width: 100%; */
+  /* max-height: 100vh; */
+
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  /* text-align: center; */
+  /* padding-left: -800%; */
+
+  /* margin: 40px auto;  */
+}
+
+.heading h1{
+  margin: 0%;
+  margin-left: -30%;
+  margin-right: 50%;
+  /* text-align: center; */
+  /* justify-content: center; */
+
+  font-size: 40px;
+  color: #000;
+  /* margin-bottom: 80px; */
+  /* position: relative; */
+
+}
+
+.heading p{
+  margin: -12.5%;
+  /* text-align: center; */
+  margin-left: -30%;
+  margin-right: -55%;
+  font-size: 14px;
+}
+
+
+
+.container {
+  max-width: 98vw;
+  max-height: 98vh;
+  margin: 0 auto;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+
+}
+
+.about {
+  margin: 10px;
+  max-width: 98vw;
+  max-height: 98vh;
+
+  display: flex;
+  /* justify-content: flex-end; Aligns the content to the right */
+  /* align-items: flex-start; Aligns the content to the top */
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+
+}
+
+.about-image {
+  max-width: 98vw;
+  max-height: 98vh;
+  height: 40%;
+  display: block;
+
+  /* flex: 0 0 auto; */
+  margin-right: 40px;
+  overflow: hidden;
+  transition: all 0.2 ease;
+}
+
+.about-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transition: all 0.2s ease;
+
+}
+
+
+
+.about-content {
+
+  margin: 40% auto;
+  /* flex: 1; */
+  margin-top: -300px;
+  margin-right: -700 auto;
+  text-align: left;
+  /* text-align: center; */
+  transition: all 0.3s ease;
+
+}
+
+
+.about-content h2 {
+  max-width: 100%;
+  margin-left: 700px;
+  margin-right: -100 auto;
+  font-size: 23px;
+  text-align: left;
+  /* margin-bottom: 60px; */
+  /* color: #333; */
+
+}
+
+.about-content p {
+  margin-left: 50%;
+  margin-right: 10%;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #666;
+  /* text-align: right; */
+
+
+  /* margin-top: -60px; */
+
+
+}
+
+.example-card {
+  position: fixed;
+  bottom: 10%;
+  text-align: center;
+  /* left: 50%; */
+  width: 100%;
+  transition: all 0.3s ease;
+
+}
+
+.main{
+  max-width: 98vw;
+  max-height: 98vh;
+  position: fixed;
+
+}

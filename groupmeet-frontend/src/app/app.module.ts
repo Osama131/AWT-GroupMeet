@@ -9,6 +9,8 @@ import { HeaderComponent } from './header/header.component';
 import { GroupsManagementComponent } from './groups-management/groups-management.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { AboutPageComponent } from './about-page/about-page.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -16,14 +18,16 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     LoginSignupComponent,
     HeaderComponent,
     GroupsManagementComponent,
-    CalendarComponent
+    CalendarComponent,
+    AboutPageComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    FullCalendarModule
+    FullCalendarModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
