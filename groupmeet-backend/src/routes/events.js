@@ -5,14 +5,18 @@ const {
   getEvents,
   createEvent,
   createPrivateEvent,
-  deleteEvent
+  deleteEvent,
+  getEvent
 } = require('../controllers/eventController')
 
 // GET all events
 router.get('/:cur_usr', getEvents)
 
+// GET a single event
+router.get('/:id/:creator', getEvent)
+
 // POST a new event
-router.post('/', createEvent)
+router.post('/groupevent', createEvent)
 
 // POST a new private event
 router.post('/private', createPrivateEvent)

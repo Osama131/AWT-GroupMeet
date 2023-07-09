@@ -42,9 +42,9 @@ const createEvent = async (req, res) => {
   const {title, group, start, end, user_mail} = req.body;
   const description = "public"
   const creator = user_mail
-
+  
   try {
-    const event = await Event.create({title, start, end, description,creator})
+    const event = await Event.create({title, start:"2023-07-30T13:00:00", end:"2023-07-30T15:00:00", description,creator,group})
     const target_group = await Group.findOneAndUpdate({name: group}, {
       $push:{events: event}
     })
@@ -102,9 +102,23 @@ const deleteEvent = async (req, res) => {
     res.status(200).json({sucess:"Deleted"})
   }
 
+
+  // get a single event
+const getEvent = async (req, res) => {
+  try {
+    const {id, creator} = req.params;
+
+    const event = await Event.find({title: id, creator: creator})
+    res.status(200).json(event[0]["group"]);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 module.exports = {
  getEvents,
  createEvent,
  createPrivateEvent,
- deleteEvent
+ deleteEvent,
+ getEvent
 }
