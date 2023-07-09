@@ -5,6 +5,7 @@ import { CalendarComponent } from './homescreen/calendar/calendar.component';
 import { LoginComponent } from './authenticate/login/login.component';
 import { NavigationTabsComponent } from './navigation-tabs/navigation-tabs.component';
 import { SignupComponent } from './authenticate/signup/signup.component';
+import { CreateEventComponent } from './homescreen/calendar/create/createEvent.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   // { path: 'home', component: SidenavComponent },
   { path: 'groups', component: GroupsManagementComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'calendar/create', component: CreateEventComponent },
   { path: '', redirectTo: '/groups', pathMatch: 'full' },
 ];
 

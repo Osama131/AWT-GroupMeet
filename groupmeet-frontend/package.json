@@ -25,7 +25,8 @@
     "@fullcalendar/interaction": "^6.1.8",
     "@fullcalendar/list": "^6.1.8",
     "@fullcalendar/timegrid": "^6.1.8",
-    "angular-calendar": "^0.31.0"
+    "angular-calendar": "^0.31.0",
+    "ngx-mat-timepicker": "^16.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.0",
