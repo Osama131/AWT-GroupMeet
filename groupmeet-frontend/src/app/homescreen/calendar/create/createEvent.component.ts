@@ -115,7 +115,9 @@ export class CreateEventComponent {
         else{
         this.PostEvent(form.value.title, form.value.group, this.group_meet_start, this.group_meet_end, this.chosen_durartion).subscribe({
           next: (res) => {
-            window.location.reload();
+            this.snackBar.open('Event added successfully', 'Dismiss');
+            // window.location.reload();
+            
           },
           error: () => {
             this.snackBar.open('something went wrong please try again', 'Dismiss');
