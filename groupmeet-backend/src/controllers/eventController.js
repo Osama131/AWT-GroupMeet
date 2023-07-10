@@ -266,9 +266,23 @@ function findAvailableTimeSlot(freelist, duration) {
 }
 
 
+
+// get a single event
+const getEvent = async (req, res) => {
+  try {
+    const { id, creator } = req.params;
+
+    const event = await Event.find({ title: id, creator: creator })
+    res.status(200).json(event[0]["group"]);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 module.exports = {
   getEvents,
-  createGroupEvent,
+  createEvent,
   createPrivateEvent,
-  deleteEvent
+  deleteEvent,
+  getEvent
 }
