@@ -18,7 +18,6 @@ import { environment } from '../../../../environments/environment';
 import { Group } from '../../groups-management/group';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { get } from 'mongoose';
 
 @Component({
     selector: 'app-createEvent',
