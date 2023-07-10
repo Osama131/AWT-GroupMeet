@@ -143,7 +143,9 @@ export class CreateEventComponent {
   
         this.PostPrivateEvent(form.value.title, start_time, end_time).subscribe({
           next: (res) => {
-            window.location.reload();
+            this.snackBar.open('Event added successfully', 'Dismiss');
+
+            // window.location.reload();
           },
           error: () => {
             this.snackBar.open('something went wrong please try again', 'Dismiss');
