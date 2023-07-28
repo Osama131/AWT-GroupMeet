@@ -1,15 +1,18 @@
-<!-- <header>
-    <img src="assets/images/logo.png" alt="GroupMeetLogo" class="header-logo"/>GroupMeet
-  </header> -->
+<mat-toolbar color="primary">
+  <button mat-flat-button color="basic" class="home-btn" [routerLink]="['']">
+      <mat-icon class="home-icon">home</mat-icon>
+      GroupMeet
+  </button>
+  <span class="spacer"></span>
+  <button mat-flat-button color="primary" (click)="github()">
+    <!-- <mat-icon svgIcon="github"></mat-icon> -->
+    <img src="assets/images/github.png" alt="github" class="github-icon">
+    Github
+  </button>
 
-  <header>
-    <div class="logo" (click)="goToHomePage()">
-      <img src="assets/images/logo.png" alt="Logo">
-      <h1>GroupMeet</h1>
-    </div>
-    <div class="menu">
-      <a routerLink="/about">About</a>
-      <button *ngIf="isLoggedIn" (click)="signOut()">Sign Out</button>
-    </div>
-  </header>
-  
+  <button mat-flat-button color="basic" [routerLink]="['/about']">
+    About
+  </button>
+
+  <button mat-raised-button *ngIf="isLoggedIn()" (click)="logoutAction()">logout</button>
+</mat-toolbar>
