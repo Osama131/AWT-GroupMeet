@@ -43,11 +43,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         AsyncPipe,
         MatAutocompleteModule,
         HttpClientModule,
-        ReactiveFormsModule,
-
-
-
-
+        ReactiveFormsModule
     ],
     providers: [
 
@@ -56,8 +52,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class CreateEventComponent {
     cur_user = localStorage.getItem('token');
-    group_meet_start: string;
-    group_meet_end:string;
+    group_meet_start: Date;
+    group_meet_end:Date;
     chosen_group:string
     chosen_durartion:string
 
@@ -65,7 +61,7 @@ export class CreateEventComponent {
       return this.httpClient.get<Group[]>(environment.API_URL + "/groups/"+localStorage.getItem('token'));
     }
     
-    PostEvent(eventTitle: any, eventGroup: string, start:string, end:string, duration:string) {
+    PostEvent(eventTitle: any, eventGroup: string, start:Date, end:Date, duration:string) {
       // const str_date = new Date(selectInfo.startStr).toISOString().replace(/T.*$/, '')+ 'T13:00:00';
       // const end_date = new Date(selectInfo.startStr).toISOString().replace(/T.*$/, '')+ 'T15:00:00';
       
@@ -75,7 +71,7 @@ export class CreateEventComponent {
     }
 
     //  {"title": "TestPrivate", "start": "2023-07-19T13:00:00" ,"end": "2023-07-19T15:00:00", "user_mail": "Atef"}
-    PostPrivateEvent(eventTitle: any, start:string, end:string) {
+    PostPrivateEvent(eventTitle: any, start:Date, end:Date) {
       // const str_date = new Date(selectInfo.startStr).toISOString().replace(/T.*$/, '')+ 'T13:00:00';
       // const end_date = new Date(selectInfo.startStr).toISOString().replace(/T.*$/, '')+ 'T15:00:00';
       
@@ -140,7 +136,7 @@ export class CreateEventComponent {
           let start_time = final_day + 'T' + form.value.startTime
           let end_time = final_day + 'T' + form.value.endTime
   
-        this.PostPrivateEvent(form.value.title, start_time, end_time).subscribe({
+        this.PostPrivateEvent(form.value.title, new Date(start_time), new Date(end_time)).subscribe({
           next: (res) => {
             this.snackBar.open('Event added successfully', 'Dismiss');
 
@@ -154,8 +150,8 @@ export class CreateEventComponent {
       }
 
       dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
-        this.group_meet_start= dateRangeStart.value
-        this.group_meet_end= dateRangeEnd .value
+        this.group_meet_start= new Date(dateRangeStart.value)
+        this.group_meet_end= new Date(dateRangeEnd .value)
         console.log(this.group_meet_end)
         
 
