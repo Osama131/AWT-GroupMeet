@@ -14,7 +14,10 @@ const getEvents = async (req, res) => {
     for (let i = 0; i < groups.length; i++) {
       for (let j = 0; j < groups[i]["events"].length; j++) {
         const ev = await Event.find({ _id: groups[i]["events"][j] })
-        events_list.push(ev[0]);
+        // only push if not null (event was deleted)
+        if (ev[0] != null) {
+          events_list.push(ev[0]);
+        }
       }
 
     }
@@ -23,7 +26,10 @@ const getEvents = async (req, res) => {
     let events_ids = user[0]["events"];
     for (let i = 0; i < events_ids.length; i++) {
       const ev = await Event.find({ _id: events_ids[i] })
-      events_list.push(ev[0]);
+      // only push if not null (event was deleted)
+      if (ev[0] != null) {
+        events_list.push(ev[0]);
+      }
     }
 
     res.status(200).json(events_list);
@@ -48,12 +54,12 @@ const createGroupEvent = async (req, res) => {
   var freelist = [];
 
   //change start and end dates to Date objects and set hours to 9:00.
-  var start_date = new Date(changeDateFormatFromFrontend(input.start))
+  // var start_date = new Date(changeDateFormatFromFrontend(input.start))
+  var start_date = new Date(input.start)
   start_date.setHours(9, 0, 0, 0)
-  // console.log("start_date: " + start_date)
-  var end_date = new Date(changeDateFormatFromFrontend(input.end))
+  // var end_date = new Date(changeDateFormatFromFrontend(input.end))
+  var end_date = new Date(input.end)
   end_date.setHours(18, 0, 0, 0)
-  // console.log("end_date: " + end_date)
 
   //initialize free list
   for (let i = new Date(start_date); i <= end_date; i.setDate(i.getDate() + 1)) {
@@ -78,23 +84,22 @@ const createGroupEvent = async (req, res) => {
     const user = await User.find({ email: members[i] })
     for (let j = 0; j < user[0]["events"].length; j++) {
       const ev = await Event.find({ _id: user[0]["events"][j] })
-      const ev_start = new Date(ev[0]["start"])
-      const ev_end = new Date(ev[0]["end"])
+      if (ev[0] != null) {
+        const ev_start = new Date(ev[0]["start"])
+        const ev_end = new Date(ev[0]["end"])
 
-      //only add private events that are within the start and end dates of the group event
-      if (ev_start >= start_date && ev_end <= end_date) {
-        private_events.push({ start: ev_start, end: ev_end });
+        //only add private events that are within the start and end dates of the group event
+        if (ev_start >= start_date && ev_end <= end_date) {
+          private_events.push({ start: ev_start, end: ev_end });
+        }
       }
     }
   }
-  // console.log(private_events)
 
   //remove all private events from free list
   for (let i = 0; i < private_events.length; i++) {
     updateFreeList(freelist, private_events[i])
   }
-  // console.log("freelist after removing private events: ")
-  // printFreeList(freelist);
 
   // get all groups that all members are in
   const all_groups = []
@@ -106,7 +111,6 @@ const createGroupEvent = async (req, res) => {
       all_groups.push(group[j])
     }
   }
-  console.log(all_groups)
   // remove duplicates
   // all_groups = [...new Set(all_groups)]
 
@@ -115,35 +119,25 @@ const createGroupEvent = async (req, res) => {
     // if (all_groups[i].length > 0) {
     for (let j = 0; j < all_groups[i]["events"].length; j++) {
       const ev = await Event.find({ _id: all_groups[i]["events"][j] })
-      const ev_start = new Date(ev[0]["start"])
-      ev_start.setHours(ev_start.getHours() + 2)
-      const ev_end = new Date(ev[0]["end"])
-      ev_end.setHours(ev_end.getHours() + 2)
+      // make sure ev is not undefined
+      if (ev[0] != null) {
 
-      // console.log(all_groups[i]["events"][j])
-      // console.log("ev: " + ev)
-      // console.log("ev_start: " + ev_start)
-      // console.log("ev_end: " + ev_end)
-      // console.log("start_date: " + start_date)
-      // console.log("end_date: " + end_date)
-
-      // console.log("start condition:" + ev_start.getTime() >= start_date.getTime())
-      // console.log("end condition:" + ev_end.getTime() <= end_date.getTime())
-      //only add group events that are within the start and end dates of the group event
-      if (ev_start.getTime() >= start_date.getTime() && ev_end <= end_date) {
-        // console.log("gowaaaaaaaaaaa")
-        all_groups_events.push({ start: ev_start, end: ev_end });
+        const ev_start = new Date(ev[0]["start"])
+        const ev_end = new Date(ev[0]["end"])
+        //only add group events that are within the start and end dates of the group event
+        if (ev_start >= start_date && ev_end <= end_date) {
+          all_groups_events.push({ start: ev_start, end: ev_end });
+        }
       }
     }
-    // }
   }
-  console.log("all_groups_events", all_groups_events)
+  // console.log("all_groups_events", all_groups_events)
+
 
   //remove all group events from free list
   for (let i = 0; i < all_groups_events.length; i++) {
     updateFreeList(freelist, all_groups_events[i])
   }
-
   // printFreeList(freelist);
 
   // find matching time slot
@@ -155,14 +149,13 @@ const createGroupEvent = async (req, res) => {
   } else {
     //add event to database and update user and group events
     try {
-
-      console.log("start_date: " + changeDateTimeFormatToBackend(candidate.start))
-      console.log("end_date: " + changeDateTimeFormatToBackend(candidate.end))
       const event = await Event.create({
         title: input.title,
         description: description,
-        start: changeDateTimeFormatToBackend(candidate.start),
-        end: changeDateTimeFormatToBackend(candidate.end),
+        // start: changeDateTimeFormatToBackend(candidate.start),
+        // end: changeDateTimeFormatToBackend(candidate.end),
+        start: candidate.start,
+        end: candidate.end,
         creator: input.user_mail,
         group: input.group
       })
@@ -171,7 +164,7 @@ const createGroupEvent = async (req, res) => {
         $push: { events: event }
       })
 
-      res.status(200).json({ date: start_date })
+      res.status(200).json({ date: candidate.start })
     }
     catch (error) {
       res.status(400).json({ error: error.message })
@@ -226,26 +219,26 @@ const deleteEvent = async (req, res) => {
 }
 
 //private function to change format from mm/dd/yyyy to yyyy-mm-dd
-function changeDateFormatFromFrontend(inputDate) {
-  var splitDate = inputDate.split('/');
-  if (splitDate[0].length == 1) {
-    splitDate[0] = "0" + splitDate[0];
-  }
-  if (splitDate[1].length == 1) {
-    splitDate[1] = "0" + splitDate[1];
-  }
-  // console.log(splitDate[2] + '-' + splitDate[0] + '-' + splitDate[1]);
-  return splitDate[2] + '-' + splitDate[0] + '-' + splitDate[1];
-}
+// function changeDateFormatFromFrontend(inputDate) {
+//   var splitDate = inputDate.split('/');
+//   if (splitDate[0].length == 1) {
+//     splitDate[0] = "0" + splitDate[0];
+//   }
+//   if (splitDate[1].length == 1) {
+//     splitDate[1] = "0" + splitDate[1];
+//   }
+//   // console.log(splitDate[2] + '-' + splitDate[0] + '-' + splitDate[1]);
+//   return splitDate[2] + '-' + splitDate[0] + '-' + splitDate[1];
+// }
 
 //private function to change format from Date object to yyyy-mm-ddThh:mm:ss
 function changeDateTimeFormatToBackend(inputDate) {
-  var year = inputDate.getUTCFullYear();
-  var month = inputDate.getUTCMonth() + 1;
-  var day = inputDate.getUTCDate();
-  var hours = inputDate.getUTCHours();
-  var minutes = inputDate.getUTCMinutes();
-  var seconds = inputDate.getUTCSeconds();
+  var year = inputDate.getFullYear();
+  var month = inputDate.getMonth() + 1;
+  var day = inputDate.getDate();
+  var hours = inputDate.getHours();
+  var minutes = inputDate.getMinutes();
+  var seconds = inputDate.getSeconds();
 
   if (month.toString().length == 1) {
     month = '0' + month;
@@ -278,17 +271,17 @@ function updateFreeList(freelist, event) {
     const freelist_start = new Date(freelist[i]["start"])
     const freelist_end = new Date(freelist[i]["end"])
 
-    if (event_start >= freelist_start && event_end <= freelist_end) {
+    if (event_start > freelist_start && event_end < freelist_end) {
       freelist[i] = { "start": freelist_start, "end": event_start }
       const new_entry = { "start": event_end, "end": freelist_end }
       freelist.splice(i + 1, 0, new_entry)
       break;
     }
-    else if (event_start <= freelist_start && event_end <= freelist_end) {
+    else if (event_start <= freelist_start && event_end < freelist_end && event_end > freelist_start) {
       freelist[i] = { "start": event_end, "end": freelist_end }
       break;
     }
-    else if (event_start >= freelist_start && event_end >= freelist_end) {
+    else if (event_start > freelist_start && event_end >= freelist_end && event_start < freelist_end) {
       freelist[i] = { "start": freelist_start, "end": event_start }
       break;
     }
@@ -345,8 +338,8 @@ const getEvent = async (req, res) => {
 //print free list
 function printFreeList(freelist) {
   for (let i = 0; i < freelist.length; i++) {
-    // console.log("start: " + freelist[i]["start"])
-    // console.log("end: " + freelist[i]["end"])
+    console.log("start: " + freelist[i]["start"])
+    console.log("end: " + freelist[i]["end"])
   }
 }
 
