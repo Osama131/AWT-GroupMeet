@@ -44,19 +44,19 @@ Welcome to GroupMeet – your all-in-one online solution for effortlessly schedu
 
 ## Libraries
 
-### Back end
+### Back-end
                 
 | Technology | Function |
 | ------ | ------ |
-| MongoDB Atlas | Files are hosted in MongoDB Atlas database |
+| MongoDB Atlas | Data are hosted in MongoDB Atlas database |
 | NodeJS | Asynchronous JavaScript runtime environment |
 | Express |  Connection with the front end is done through API developed in Express|
 
-### Front end
+### Front-end
 
 | Technology | Function |
 | ------ | ------ |
-| Angular | Used to make a single page application |
+| Angular | Used to make application pages |
 
 
 
@@ -65,7 +65,7 @@ Welcome to GroupMeet – your all-in-one online solution for effortlessly schedu
 
 You need to have Node.js installed
 
-### Running the Database
+### Running the Backend
 
 ```
 cd backend
