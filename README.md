@@ -68,7 +68,7 @@ You need to have Node.js installed
 ### Running the Backend
 
 ```
-cd backend
+cd groupmeet-backend
 npm install
 npm start
 ```
@@ -82,7 +82,7 @@ Connected to database
 ### Running the Frontend
 
 ```
-cd frontend
+cd groupmeet-frontend
 npm install
 ng serve
 ```
